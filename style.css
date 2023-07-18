@@ -1,0 +1,23 @@
+* {
+  background-color: rgb(202, 201, 201);
+}
+
+#color-palette {
+  margin-left: 10px;
+}
+
+.color , .pixel {
+  border: 1px solid black;
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  margin: 3px;
+}
+
+.pixel-board {
+  text-align: center;
+  border: 2px solid red;
+  margin: 30px 10px ;
+  padding: 3px;
+  width: 250px;
+}
