@@ -49,6 +49,8 @@ for (let indexPixelColumn = 0; indexPixelColumn < pixelsLenght; indexPixelColumn
   }
 }
 
+// REQUISITO 5
+
 function reset() {
   const pixels = document.querySelectorAll('.pixel');
   for (let index = 0; index < pixels.length; index += 1) {
@@ -61,3 +63,28 @@ document.querySelector('body').insertBefore(button, document.querySelector('#pix
 button.id = 'clear-board';
 button.textContent = 'Limpar';
 button.addEventListener('click', reset);
+
+// REQUISITO 6
+
+const palette = document.querySelectorAll('.color');
+
+function generateColor() {
+  const letters = '0123456789ABCDEF';
+  let color = '#';
+
+  for (let indexRandom = 0; indexRandom < 6; indexRandom += 1) {
+    color += letters[Math.floor(Math.random() * 16)];
+  } return color;
+}
+
+function randomColor() {
+  for (let index = 0; index < palette.length; index += 1) {
+    palette[index].style.backgroundColor = generateColor();
+  }
+}
+
+const buttonRandom = document.createElement('button');
+document.querySelector('body').appendChild(buttonRandom);
+buttonRandom.id = 'button-random-color';
+buttonRandom.textContent = 'Cores aleatórias';
+buttonRandom.addEventListener('click', randomColor);
