@@ -1,3 +1,19 @@
+window.onload = () => {
+  if (JSON.parse(localStorage.getItem('pixelBoard')) === null) {
+    localStorage.setItem('pixelBoard', JSON.stringify([]));
+  }
+  const getListStorage = JSON.parse(localStorage.getItem('pixelBoard'));
+  if (getListStorage == null) {
+    return;
+  }
+  for (let index = 0; index < (getListStorage.length); index += 2) {
+    document.getElementById(getListStorage[index])
+      .style.backgroundColor = getListStorage[index + 1];
+  }
+};
+
+const listStorage = JSON.parse(localStorage.getItem('pixelBoard')) || [];
+
 // Capturando Elementos
 
 const colorPalette = document.querySelector('#color-palette');
@@ -23,9 +39,21 @@ function getColorSelected(event) {
 }
 
 function setColorSelected(event) {
+  if (document.querySelector('.selected') === null) {
+    return;
+  }
   const selectedItem = document.querySelector('.selected');
   const element = event.target;
   element.style.backgroundColor = selectedItem.style.backgroundColor;
+
+  // REQUISITO 7
+
+  localStorage.setItem('color', element.style.backgroundColor);
+  localStorage.setItem('position', element.id);
+  listStorage.push(localStorage.getItem('position'));
+  listStorage.push(localStorage.getItem('color'));
+  console.log(listStorage);
+  localStorage.setItem('pixelBoard', JSON.stringify(listStorage));
 }
 
 // Paleta de cores
@@ -39,13 +67,15 @@ for (let index = 0; index < colors.length; index += 1) {
 }
 
 // Pixel Board
-
+let count = 0;
 for (let indexPixelColumn = 0; indexPixelColumn < pixelsLenght; indexPixelColumn += 1) {
   for (let indexPixelRow = 0; indexPixelRow < pixelsLenght; indexPixelRow += 1) {
     const pixel = document.createElement('div');
     pixelBoard.appendChild(pixel);
     pixel.className = 'pixel';
+    pixel.id = count;
     pixel.addEventListener('click', setColorSelected);
+    count += 1;
   }
 }
 
@@ -88,3 +118,5 @@ document.querySelector('body').appendChild(buttonRandom);
 buttonRandom.id = 'button-random-color';
 buttonRandom.textContent = 'Cores aleatórias';
 buttonRandom.addEventListener('click', randomColor);
+
+// REQUISITO 8
