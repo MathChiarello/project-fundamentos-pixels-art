@@ -15,45 +15,45 @@ window.onload = () => {
 // REQUISITO 8
 
 const inputBoardSize = document.createElement('input');
-document.querySelector('body').insertBefore(inputBoardSize, document.querySelector('#pixel-board'));
-inputBoardSize.type = 'number'
-inputBoardSize.min = '1'
+const pixelBoard = document.querySelector('#pixel-board');
+
+document.querySelector('body').insertBefore(inputBoardSize, pixelBoard);
+inputBoardSize.type = 'number';
+inputBoardSize.min = '1';
 inputBoardSize.id = 'board-size';
 
-const buttonBoardSize = document.createElement('button')
+const buttonBoardSize = document.createElement('button');
 buttonBoardSize.textContent = 'VQV';
-buttonBoardSize.id = 'generate-board'
-document.querySelector('body').insertBefore(buttonBoardSize, document.querySelector('#pixel-board'));
-
-buttonBoardSize.addEventListener('click', getBorderSize);
+buttonBoardSize.id = 'generate-board';
+document.querySelector('body').insertBefore(buttonBoardSize, pixelBoard);
 
 function getBorderSize() {
   if (document.querySelector('#board-size').value === '') {
-    alert('Board inválido!')
+    alert('Board inválido!');
     localStorage.setItem('borderSize', JSON.stringify(5));
   }
-  localStorage.setItem('borderSize',document.querySelector('#board-size').value);
-  window.location.reload()
+  localStorage.setItem('borderSize', document.querySelector('#board-size').value);
+  window.location.reload();
 }
 
-
+buttonBoardSize.addEventListener('click', getBorderSize);
 
 // Capturando Elementos
 
 const listStorage = JSON.parse(localStorage.getItem('pixelBoard')) || [];
 const colorPalette = document.querySelector('#color-palette');
-const pixelBoard = document.querySelector('#pixel-board');
 
 // Criando constantes
 
 const colors = ['violet', 'green', 'red', 'blue'];
+let pixelsLenght = 0;
 
 if (JSON.parse(localStorage.getItem('borderSize')) === null) {
   pixelsLenght = 5;
-  document.querySelector('#pixel-board').style.width = '250px';
+  pixelBoard.style.width = '250px';
 } else {
   pixelsLenght = JSON.parse(localStorage.getItem('borderSize'));
-  document.querySelector('#pixel-board').style.width = JSON.parse(localStorage.getItem('borderSize')) * 50 + 'px';
+  pixelBoard.style.width = `${JSON.parse(localStorage.getItem('borderSize')) * 50}px`;
 }
 
 // Função onClick
