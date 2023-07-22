@@ -12,17 +12,49 @@ window.onload = () => {
   }
 };
 
-const listStorage = JSON.parse(localStorage.getItem('pixelBoard')) || [];
+// REQUISITO 8
+
+const inputBoardSize = document.createElement('input');
+document.querySelector('body').insertBefore(inputBoardSize, document.querySelector('#pixel-board'));
+inputBoardSize.type = 'number'
+inputBoardSize.min = '1'
+inputBoardSize.id = 'board-size';
+
+const buttonBoardSize = document.createElement('button')
+buttonBoardSize.textContent = 'VQV';
+buttonBoardSize.id = 'generate-board'
+document.querySelector('body').insertBefore(buttonBoardSize, document.querySelector('#pixel-board'));
+
+buttonBoardSize.addEventListener('click', getBorderSize);
+
+function getBorderSize() {
+  if (document.querySelector('#board-size').value === '') {
+    alert('Board inválido!')
+    localStorage.setItem('borderSize', JSON.stringify(5));
+  }
+  localStorage.setItem('borderSize',document.querySelector('#board-size').value);
+  window.location.reload()
+}
+
+
 
 // Capturando Elementos
 
+const listStorage = JSON.parse(localStorage.getItem('pixelBoard')) || [];
 const colorPalette = document.querySelector('#color-palette');
 const pixelBoard = document.querySelector('#pixel-board');
 
 // Criando constantes
 
 const colors = ['violet', 'green', 'red', 'blue'];
-const pixelsLenght = 5;
+
+if (JSON.parse(localStorage.getItem('borderSize')) === null) {
+  pixelsLenght = 5;
+  document.querySelector('#pixel-board').style.width = '250px';
+} else {
+  pixelsLenght = JSON.parse(localStorage.getItem('borderSize'));
+  document.querySelector('#pixel-board').style.width = JSON.parse(localStorage.getItem('borderSize')) * 50 + 'px';
+}
 
 // Função onClick
 
@@ -119,4 +151,13 @@ buttonRandom.id = 'button-random-color';
 buttonRandom.textContent = 'Cores aleatórias';
 buttonRandom.addEventListener('click', randomColor);
 
-// REQUISITO 8
+// Bônus
+/*
+const buttonClear = document.createElement('button');
+document.querySelector('body').appendChild(buttonClear);
+buttonClear.textContent = 'Limpar LocalStorage';
+buttonClear.addEventListener('click', () => {
+  localStorage.clear()
+  pixelsLenght = 5;
+});
+*/
